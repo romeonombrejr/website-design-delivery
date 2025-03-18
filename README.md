@@ -3,7 +3,6 @@ This is a [Next.js](https://nextjs.org) project. Clone this run the commands bel
 
 First, install the dependencies:
 
-```bash
 npm install
 # or
 pnpm install
