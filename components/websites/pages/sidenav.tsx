@@ -19,7 +19,7 @@ export default function SideNav({ onSelectPage }: { onSelectPage: (pageName: str
       <h3>Pages</h3>
       <Accordion type="single" collapsible>
         {pages.map((page) => (
-          <AccordionItem key={page.name} value={page.name}>
+          <AccordionItem key={page.name} value={page.name} >
             <AccordionTrigger 
               onClick={() => onSelectPage(page.name)} // Pass selected page
             >
