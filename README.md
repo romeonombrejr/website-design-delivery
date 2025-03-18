@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org) project. Clone this and run the commands below.
 ## Requirements
 
-NodeJS(https://nodejs.org/en/download)
+[NodeJS](https://nodejs.org/en/download)
 
 ## Getting Started
 
