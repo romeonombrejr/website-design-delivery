@@ -3,10 +3,11 @@ This is a [Next.js](https://nextjs.org) project. Clone this run the commands bel
 
 First, install the dependencies:
 
+```bash
 npm install
 # or
 pnpm install
-# or
+```
 
 Second, run the development server:
 
@@ -14,7 +15,7 @@ Second, run the development server:
 npm run dev
 # or
 pnpm dev
-# or
+```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
