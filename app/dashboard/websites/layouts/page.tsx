@@ -31,7 +31,6 @@ function LayoutContent() {
   );
 }
 
-
 export default function LayoutsPage() {
   return (
     <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">

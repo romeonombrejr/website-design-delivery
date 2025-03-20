@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode } from "react";
 import { Element, Page, WebsiteContextType } from "@/lib/definitions";
-import { placeholderMenu } from "@/lib/placeholder-data";
+import { placeholderMenu, placeholderSection } from "@/lib/placeholder-data";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
   undefined
@@ -37,12 +37,14 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
     sectionName: string,
     elements: Element[] = []
   ) => {
+    const defaultElements = elements.length > 0 ? elements : placeholderSection[0].elements;
+  
     setPages((prevPages) =>
       prevPages.map((page) =>
         page.name === pageName
           ? {
               ...page,
-              sections: [...page.sections, { name: sectionName, elements }],
+              sections: [...page.sections, { name: sectionName, elements: defaultElements }],
             }
           : page
       )

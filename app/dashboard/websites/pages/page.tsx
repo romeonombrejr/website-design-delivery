@@ -30,13 +30,15 @@ export default function Page() {
 
         {activePage?.sections.map((section) => (
           <div
-            className="border rounded-lg cursor-pointer hover:bg-muted"
             key={section.name}
             onClick={() => handleSectionClick(section.name)}
           >
-            {section.elements.map((element, index) => (
-              <RenderElement key={index} element={element} />
-            ))}
+            <p className="font-bold text-sm mb-2 ms-4">{section.name}</p>
+            <div className="border rounded-lg cursor-pointer hover:bg-muted mb-4">
+              {section.elements.map((element, index) => (
+                <RenderElement key={index} element={element} />
+              ))}
+            </div>
           </div>
         ))}
 
