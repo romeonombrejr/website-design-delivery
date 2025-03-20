@@ -3,7 +3,7 @@
 import SideNav from "@/components/websites/pages/sidenav";
 import { useWebsites } from "../WebsitesContext";
 import { useRouter } from "next/navigation";
-import { useState, Suspense } from "react";
+import { useState } from "react";
 import RenderElement from "@/components/websites/pages/render-element";
 
 export default function Page() {
@@ -23,9 +23,9 @@ export default function Page() {
 
   return (
     <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
-      <Suspense>
+     
         <SideNav onSelectPage={setSelectedPage} />
-      </Suspense>
+      
       <div className="w-5/6 bg-muted/50 rounded-xl p-4">
         <h4 className="mb-6 font-bold">Selected Page: {activePage?.name}</h4>
 

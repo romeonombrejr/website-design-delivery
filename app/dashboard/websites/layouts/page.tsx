@@ -4,6 +4,7 @@ import LayoutsSideNav from "@/components/websites/layouts/layouts-sidenav";
 import { useSearchParams } from "next/navigation";
 import { useWebsites } from "../WebsitesContext";
 import RenderElement from "@/components/websites/pages/render-element";
+import { Suspense } from "react";
 
 export default function LayoutsPage() {
   const { pages } = useWebsites();
@@ -17,7 +18,9 @@ export default function LayoutsPage() {
 
   return (
     <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
+      <Suspense>
       <LayoutsSideNav />
+      </Suspense>
       <div className="w-5/6 bg-muted/50 rounded-xl p-4">
         <h4 className="mb-6 font-bold">Selected Page: {selectedPage}</h4>
 
