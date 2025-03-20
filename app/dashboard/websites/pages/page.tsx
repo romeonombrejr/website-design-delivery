@@ -23,15 +23,14 @@ export default function Page() {
 
   return (
     <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
-     
-        <SideNav onSelectPage={setSelectedPage} />
-      
+      <SideNav onSelectPage={setSelectedPage} />
+
       <div className="w-5/6 bg-muted/50 rounded-xl p-4">
         <h4 className="mb-6 font-bold">Selected Page: {activePage?.name}</h4>
 
         {activePage?.sections.map((section) => (
           <div
-          className="border rounded-lg cursor-pointer hover:bg-muted"
+            className="border rounded-lg cursor-pointer hover:bg-muted"
             key={section.name}
             onClick={() => handleSectionClick(section.name)}
           >

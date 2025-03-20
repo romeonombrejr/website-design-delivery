@@ -17,10 +17,10 @@ export default function LayoutsPage() {
   const activePage = pages.find((page) => page.name === selectedPage);
 
   return (
+    <Suspense>
     <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
-      <Suspense>
+      
       <LayoutsSideNav />
-      </Suspense>
       <div className="w-5/6 bg-muted/50 rounded-xl p-4">
         <h4 className="mb-6 font-bold">Selected Page: {selectedPage}</h4>
 
@@ -34,5 +34,6 @@ export default function LayoutsPage() {
 
       </div>
     </div>
+    </Suspense></Suspense>
   );
 }
