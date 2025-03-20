@@ -1,25 +1,38 @@
-'use client';
+"use client";
 
-import SideNav from '@/components/websites/pages/sidenav';
-import { useWebsites } from '../WebsitesContext';
+import SideNav from "@/components/websites/pages/sidenav";
+import { useWebsites } from "../WebsitesContext";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-import RenderElement from '@/components/websites/pages/render-element';
+import RenderElement from "@/components/websites/pages/render-element";
 
 export default function Page() {
   const { pages } = useWebsites();
-  const [selectedPage, setSelectedPage] = useState<string>('Home');
+  const router = useRouter();
+  const [selectedPage, setSelectedPage] = useState<string>("Home");
 
   const activePage = pages.find((page) => page.name === selectedPage);
+
+  const handleSectionClick = (sectionName: string) => {
+    router.push(
+      `/dashboard/websites/layouts?selectedPage=${encodeURIComponent(
+        selectedPage
+      )}&selectedSection=${encodeURIComponent(sectionName)}`
+    );
+  };
 
   return (
     <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
       <SideNav onSelectPage={setSelectedPage} />
       <div className="w-5/6 bg-muted/50 rounded-xl p-4">
-        <h4 className="mb-4">Selected Page: {activePage?.name}</h4>
+        <h4 className="mb-6 font-bold">Selected Page: {activePage?.name}</h4>
 
         {activePage?.sections.map((section) => (
-          <div key={section.name} className="p-4 border rounded-lg mb-4">
-            <h3 className="text-lg font-bold">{section.name}</h3>
+          <div
+            key={section.name}
+            className="p-4 border rounded-lg mb-4 cursor-pointer hover:bg-muted"
+            onClick={() => handleSectionClick(section.name)}
+          >
             {section.elements.map((element, index) => (
               <RenderElement key={index} element={element} />
             ))}

@@ -1,17 +1,7 @@
-'use client';
+"use client";
 
-import React, { JSX } from 'react';
-
-interface Element {
-  tag: keyof JSX.IntrinsicElements; // Ensures only valid HTML tags
-  className?: string;
-  content?: string;
-  src?: string;
-  alt?: string;
-  link?: string;
-  onClick?: () => void;
-  children?: Element[];
-}
+import React, { JSX } from "react";
+import { Element } from "@/lib/definitions";
 
 export default function RenderElement({ element }: { element: Element }) {
   return React.createElement(
@@ -24,10 +14,9 @@ export default function RenderElement({ element }: { element: Element }) {
     },
     <>
       {element.content}
-      {element.children?.map((child, index) => (
-        <RenderElement key={index} element={child} />
+      {element.children?.map((child) => (
+        <RenderElement key={child.key} element={child} />
       ))}
     </>
   );
 }
-

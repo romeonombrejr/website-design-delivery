@@ -1,54 +1,23 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-
-interface Element {
-  tag: "div" | "a" | "p" | "h1" | "h2" | "h3" | "img" | "button" | "video";
-  className?: string;
-  content?: string; // For text content
-  src?: string; // For media elements like <img> or <video>
-  alt?: string; // Alt text for accessibility
-  link?: string; // Optional link for clickable elements
-  onClick?: () => void; // For interactive elements like buttons
-  children?: Element[]; // For nesting elements
-}
-
-interface Section {
-  name: string;
-  elements: Element[];
-}
-
-interface Page {
-  name: string;
-  sections: Section[];
-}
-
-interface WebsiteContextType {
-  pages: Page[];
-  addPage: (pageName: string) => void;
-  addSection: (pageName: string, sectionName: string) => void;
-}
+import { Element, Page, WebsiteContextType } from "@/lib/definitions";
+import { placeholderMenu } from "@/lib/placeholder-data";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
   undefined
 );
 
 export function WebsitesProvider({ children }: { children: ReactNode }) {
-  const [pages, setPages] = useState<Page[]>([
-    {
-      name: "Home",
-      sections: [
+    const [pages, setPages] = useState<Page[]>([
         {
-          name: "Menu",
-          elements: [
-            {
-              tag: "div",
-            },
+          name: "Home",
+          sections: [
+           placeholderMenu[0]
           ],
         },
-      ],
-    },
-  ]);
+      ]);
+      
   console.log(pages);
 
   const addPage = (pageName: string) => {
@@ -57,14 +26,7 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
       {
         name: pageName,
         sections: [
-          {
-            name: "Menu",
-            elements: [
-              {
-                tag: "div",
-              },
-            ],
-          },
+         placeholderMenu[0]
         ],
       },
     ]);
@@ -101,4 +63,3 @@ export function useWebsites() {
   }
   return context;
 }
-

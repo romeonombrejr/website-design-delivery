@@ -16,7 +16,7 @@ export default function SideNav({ onSelectPage }: { onSelectPage: (pageName: str
 
   return (
     <div className="bg-muted/50 w-1/6 rounded-xl p-4">
-      <h3>Pages</h3>
+      <h3 className="mb-6 font-bold">Pages</h3>
       <Accordion type="single" collapsible>
         {pages.map((page) => (
           <AccordionItem key={page.name} value={page.name} >
@@ -28,10 +28,11 @@ export default function SideNav({ onSelectPage }: { onSelectPage: (pageName: str
             <AccordionContent>
               <ul>
                 {page.sections.map((section) => (
-                  <li key={section.name}>{section.name}</li>
+                  <li className="mb-4" key={section.name}>&nbsp;&nbsp;&nbsp;{section.name}</li>
                 ))}
               </ul>
               <div className="mt-4 flex gap-2">
+              &nbsp;
                 <input
                   type="text"
                   value={newSection.sectionName}
