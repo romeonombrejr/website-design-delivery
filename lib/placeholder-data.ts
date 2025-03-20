@@ -6,7 +6,7 @@ export const placeholderMenu: Section[] = [
     elements: [
       {
         tag: "div",
-        className: "container flex h-14 items-center gap-2 md:gap-4",
+        className: "container flex h-14 items-center gap-2 md:gap-4 p-4",
         key: "menu",
         children: [
           {

@@ -22,13 +22,13 @@ export default function LayoutsPage() {
         <h4 className="mb-6 font-bold">Selected Page: {selectedPage}</h4>
 
         {activePage?.sections.map((section) => (
-          <div className="p-4 border cursor-pointer hover:bg-muted">
+          <div key={section.name}>
             {section.elements.map((element, index) => (
               <RenderElement key={index} element={element} />
             ))}
           </div>
         ))}
-        
+
       </div>
     </div>
   );
