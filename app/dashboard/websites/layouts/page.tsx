@@ -18,22 +18,20 @@ export default function LayoutsPage() {
 
   return (
     <Suspense>
-    <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
-      
-      <LayoutsSideNav />
-      <div className="w-5/6 bg-muted/50 rounded-xl p-4">
-        <h4 className="mb-6 font-bold">Selected Page: {selectedPage}</h4>
+      <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
+        <LayoutsSideNav />
+        <div className="w-5/6 bg-muted/50 rounded-xl p-4">
+          <h4 className="mb-6 font-bold">Selected Page: {selectedPage}</h4>
 
-        {activePage?.sections.map((section) => (
-          <div key={section.name}>
-            {section.elements.map((element, index) => (
-              <RenderElement key={index} element={element} />
-            ))}
-          </div>
-        ))}
-
+          {activePage?.sections.map((section) => (
+            <div key={section.name}>
+              {section.elements.map((element, index) => (
+                <RenderElement key={index} element={element} />
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     </Suspense>
   );
 }
