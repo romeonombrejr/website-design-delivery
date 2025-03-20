@@ -34,6 +34,6 @@ export default function LayoutsPage() {
 
       </div>
     </div>
-    </Suspense></Suspense>
+    </Suspense>
   );
 }
