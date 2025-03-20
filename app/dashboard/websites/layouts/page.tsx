@@ -6,7 +6,7 @@ import { useWebsites } from "../WebsitesContext";
 import RenderElement from "@/components/websites/pages/render-element";
 import { Suspense } from "react";
 
-export default function LayoutsPage() {
+function LayoutContent() {
   const { pages } = useWebsites();
   const searchParams = useSearchParams();
 
@@ -15,15 +15,9 @@ export default function LayoutsPage() {
     searchParams.get("selectedSection") || "Unknown Section";
 
   const activePage = pages.find((page) => page.name === selectedPage);
-
+  
   return (
-    <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
-      <Suspense>
-        <LayoutsSideNav />
-      </Suspense>
-
-      <Suspense>
-        <div className="w-5/6 bg-muted/50 rounded-xl p-4">
+    <div className="w-5/6 bg-muted/50 rounded-xl p-4">
           <h4 className="mb-6 font-bold">Selected Page: {selectedPage}</h4>
 
           {activePage?.sections.map((section) => (
@@ -34,6 +28,19 @@ export default function LayoutsPage() {
             </div>
           ))}
         </div>
+  );
+}
+
+
+export default function LayoutsPage() {
+  return (
+    <div className="flex gap-4 min-h-[100vh] h-full rounded-xl md:min-h-min">
+      <Suspense>
+        <LayoutsSideNav />
+      </Suspense>
+
+      <Suspense>
+        <LayoutContent />
       </Suspense>
     </div>
   );
