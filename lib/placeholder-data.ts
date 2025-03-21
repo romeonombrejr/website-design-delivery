@@ -94,7 +94,7 @@ export const placeholderSection: Section[] = [
                                 tag: "p",
                                 className: "my-3 text-lg font-bold tracking-tight md:text-5xl",
                                 key: "section-title",
-                                content: "Fast &amp; SEO friendly"
+                                content: "Fast & SEO friendly"
                             },
                             {
                                 tag: "h1",

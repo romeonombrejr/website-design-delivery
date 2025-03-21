@@ -10,13 +10,13 @@ export default function LayoutsSideNav() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const selectedPage = searchParams.get("selectedPage") || "Home";
+  const selectedPage = searchParams.get("selectedPage") || "Home"; //TODO: Make selectedPage as global to all three pages withing /websites
   const selectedSection = searchParams.get("selectedSection") || "";
 
   // Find the selected page from context
   const activePage = pages.find((page) => page.name === selectedPage);
 
-  // Handle section click to update the URL with the new selected section
+  // TODO: Add dialog box for section type selection when a section is clicked
   const handleSectionClick = (sectionName: string) => {
     router.push(
       `/dashboard/websites/layouts?selectedPage=${encodeURIComponent(
@@ -28,6 +28,7 @@ export default function LayoutsSideNav() {
   return (
     <div className="bg-muted/50 w-1/6 rounded-xl p-4">
       <h3 className="mb-6 font-bold">Layouts</h3>
+      
       <h5 className="mb-4">Sections for {selectedPage}</h5>
 
       {activePage?.sections.map((section) => (

@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Element, Page, WebsiteContextType } from "@/lib/definitions";
+import { fetchPagesFromDB } from "@/lib/data";
 import { placeholderMenu, placeholderSection } from "@/lib/placeholder-data";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
@@ -9,16 +10,14 @@ const WebsitesContext = createContext<WebsiteContextType | undefined>(
 );
 
 export function WebsitesProvider({ children }: { children: ReactNode }) {
-    const [pages, setPages] = useState<Page[]>([
-        {
-          name: "Home",
-          sections: [
-           placeholderMenu[0]
-          ],
-        },
-      ]);
-      
-  console.log(pages);
+  const [pages, setPages] = useState<Page[]>([
+      {
+        name: "Home",
+        sections: [
+          placeholderMenu[0]
+        ],
+      },
+    ]);
 
   const addPage = (pageName: string) => {
     setPages((prevPages) => [

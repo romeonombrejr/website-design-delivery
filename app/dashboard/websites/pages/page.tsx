@@ -13,6 +13,7 @@ export default function Page() {
 
   const activePage = pages.find((page) => page.name === selectedPage);
 
+  // TODO: When button is clicked, this should also make the dialog box for /layouts page to appear upon redirecting.
   const handleSectionClick = (sectionName: string) => {
     router.push(
       `/dashboard/websites/layouts?selectedPage=${encodeURIComponent(
