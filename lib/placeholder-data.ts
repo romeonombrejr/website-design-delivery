@@ -24,6 +24,7 @@ export const placeholderMenu: Section[] = [
                     key: "logo",
                     className: "text-xl font-bold text-primary",
                     content: "Logo",
+                    
                   },
                 ],
               },
