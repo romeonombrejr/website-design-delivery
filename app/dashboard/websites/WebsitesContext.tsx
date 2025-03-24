@@ -10,6 +10,9 @@ const WebsitesContext = createContext<WebsiteContextType | undefined>(
 );
 
 export function WebsitesProvider({ children }: { children: ReactNode }) {
+  const [selectedPage, setSelectedPage] = useState<string>("Home");
+  const [selectedSection, setSelectedSection] = useState<string | null>(null);
+
   const [pages, setPages] = useState<Page[]>([
       {
         name: "Home",
@@ -51,7 +54,7 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <WebsitesContext.Provider value={{ pages, addPage, addSection }}>
+    <WebsitesContext.Provider value={{ pages, addPage, addSection, selectedPage, setSelectedPage, selectedSection, setSelectedSection }}>
       {children}
     </WebsitesContext.Provider>
   );

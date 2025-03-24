@@ -23,5 +23,9 @@ export interface Page {
 export interface WebsiteContextType {
   pages: Page[];
   addPage: (pageName: string) => void;
-  addSection: (pageName: string, sectionName: string) => void;
+  addSection: (pageName: string, sectionName: string, elements?: Element[]) => void;
+  selectedPage: string;
+  setSelectedPage: (page: string) => void;
+  selectedSection: string | null;
+  setSelectedSection: (section: string | null) => void;
 }

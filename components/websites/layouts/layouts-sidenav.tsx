@@ -6,23 +6,20 @@ import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 
 export default function LayoutsSideNav() {
-  const { pages } = useWebsites();
+  const { pages, selectedPage, setSelectedSection } = useWebsites();
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const selectedPage = searchParams.get("selectedPage") || "Home"; //TODO: Make selectedPage as global to all three pages withing /websites
   const selectedSection = searchParams.get("selectedSection") || "";
 
-  // Find the selected page from context
+
   const activePage = pages.find((page) => page.name === selectedPage);
+
 
   // TODO: Add dialog box for section type selection when a section is clicked
   const handleSectionClick = (sectionName: string) => {
-    router.push(
-      `/dashboard/websites/layouts?selectedPage=${encodeURIComponent(
-        selectedPage
-      )}&selectedSection=${encodeURIComponent(sectionName)}`
-    );
+    setSelectedSection(sectionName); // Store in context
+    router.push("/dashboard/websites/layouts"); // Navigate to layouts page
   };
 
   return (

@@ -7,19 +7,15 @@ import { useState } from "react";
 import RenderElement from "@/components/websites/pages/render-element";
 
 export default function Page() {
-  const { pages } = useWebsites();
   const router = useRouter();
-  const [selectedPage, setSelectedPage] = useState<string>("Home");
+  const { pages, selectedPage, setSelectedPage, setSelectedSection } = useWebsites();
 
   const activePage = pages.find((page) => page.name === selectedPage);
 
   // TODO: When button is clicked, this should also make the dialog box for /layouts page to appear upon redirecting.
   const handleSectionClick = (sectionName: string) => {
-    router.push(
-      `/dashboard/websites/layouts?selectedPage=${encodeURIComponent(
-        selectedPage
-      )}&selectedSection=${encodeURIComponent(sectionName)}`
-    );
+    setSelectedSection(sectionName); // Store in context
+    router.push("/dashboard/websites/layouts"); // Navigate to layouts page
   };
 
   return (

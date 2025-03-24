@@ -10,12 +10,13 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 
 export default function SideNav({ onSelectPage }: { onSelectPage: (pageName: string) => void }) {
-  const { pages, addPage, addSection } = useWebsites();
+  const { pages, addPage, addSection, selectedPage, selectedSection } = useWebsites();
   const [newPage, setNewPage] = useState('');
   const [newSection, setNewSection] = useState({ pageName: '', sectionName: '' });
+  const activePage = pages.find((page) => page.name === selectedPage);
 
   return (
-    <div className="bg-muted/50 w-1/6 rounded-xl p-4">
+    <div className="bg-muted/50 w-1/6 rounded-xl p-4 overflow-auto">
       <h3 className="mb-6 font-bold">Pages</h3>
       <Accordion type="single" collapsible>
         {pages.map((page) => (
@@ -31,17 +32,17 @@ export default function SideNav({ onSelectPage }: { onSelectPage: (pageName: str
                   <li className="mb-4" key={section.name}>&nbsp;&nbsp;&nbsp;{section.name}</li>
                 ))}
               </ul>
-              <div className="mt-4 flex gap-2">
+              <div className="mt-4 flex gap-2 justify-start w-full">
               &nbsp;
                 <input
                   type="text"
                   value={newSection.sectionName}
                   onChange={(e) => setNewSection({ ...newSection, sectionName: e.target.value })}
-                  placeholder="Enter new section name"
-                  className="border p-2 rounded mb-2"
+                  placeholder="New section"
+                  className="border p-2 rounded mb-2 h-[32px] w-5/6"
                   required
                 />
-                <Button onClick={() => addSection(page.name, newSection.sectionName)}>
+                <Button className="h-[32px] w-1/6" onClick={() => addSection(page.name, newSection.sectionName)}>
                   <Plus />
                 </Button>
               </div>
@@ -53,11 +54,11 @@ export default function SideNav({ onSelectPage }: { onSelectPage: (pageName: str
             type="text"
             value={newPage}
             onChange={(e) => setNewPage(e.target.value)}
-            placeholder="Add New Page"
-            className="border p-2 rounded mb-2"
+            placeholder="New Page"
+            className="border p-2 rounded mb-2 h-[32px] w-5/6"
             required
           />
-          <Button onClick={() => addPage(newPage)}>
+          <Button className="h-[32px] w-1/6" onClick={() => addPage(newPage)}>
             <Plus />
           </Button>
         </div>
