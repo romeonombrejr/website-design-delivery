@@ -16,7 +16,6 @@ export default function LayoutsSideNav() {
   const activePage = pages.find((page) => page.name === selectedPage);
 
 
-  // TODO: Add dialog box for section type selection when a section is clicked
   const handleSectionClick = (sectionName: string) => {
     setSelectedSection(sectionName); // Store in context
     router.push("/dashboard/websites/layouts"); // Navigate to layouts page

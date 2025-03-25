@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Element, Page, WebsiteContextType } from "@/lib/definitions";
 // import { fetchPagesFromDB } from "@/lib/data";
-import { placeholderMenu, placeholderSection } from "@/lib/placeholder-data";
+import { placeholderMenu, placeholderSection, placeholderSection2 } from "@/lib/placeholder-data";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
   undefined
