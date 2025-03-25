@@ -28,4 +28,5 @@ export interface WebsiteContextType {
   setSelectedPage: (page: string) => void;
   selectedSection: string | null;
   setSelectedSection: (section: string | null) => void;
+  updateSectionLayout: (pageName: string, sectionName: string, newElements: Element[]) => void;
 }

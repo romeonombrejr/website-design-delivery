@@ -17,7 +17,7 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
       {
         name: "Home",
         sections: [
-          placeholderMenu[0]
+          placeholderSection[0]
         ],
       },
     ]);
@@ -28,7 +28,7 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
       {
         name: pageName,
         sections: [
-         placeholderMenu[0]
+          placeholderSection[0]
         ],
       },
     ]);
@@ -39,7 +39,7 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
     sectionName: string,
     elements: Element[] = []
   ) => {
-    const defaultElements = elements.length > 0 ? elements : placeholderSection[0].elements;
+    const defaultElements = elements.length > 0 ? elements : placeholderSection[1].elements;
   
     setPages((prevPages) =>
       prevPages.map((page) =>
@@ -53,8 +53,32 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const updateSectionLayout = (pageName: string, sectionName: string, newElements: Element[]) => {
+    setPages((prevPages) =>
+      prevPages.map((page) =>
+        page.name === pageName
+          ? {
+              ...page,
+              sections: page.sections.map((section) =>
+                section.name === sectionName ? { ...section, elements: newElements } : section
+              ),
+            }
+          : page
+      )
+    );
+  };
+  
+
   return (
-    <WebsitesContext.Provider value={{ pages, addPage, addSection, selectedPage, setSelectedPage, selectedSection, setSelectedSection }}>
+    <WebsitesContext.Provider value={{ 
+      pages, 
+      addPage, 
+      addSection, 
+      selectedPage, 
+      setSelectedPage, 
+      selectedSection, 
+      setSelectedSection,
+      updateSectionLayout }}>
       {children}
     </WebsitesContext.Provider>
   );

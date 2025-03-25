@@ -16,7 +16,17 @@ interface SectionSelectionProps {
 }
 
 export default function SectionSelection({ isOpen, onClose }: SectionSelectionProps) {
-    const { selectedSection } = useWebsites();
+    const { selectedPage, selectedSection, updateSectionLayout } = useWebsites();
+
+    const handleSelectLayout = (newSectionName: string) => {
+        const newLayout = placeholderSection.find((section) => section.name === newSectionName);
+        if (newLayout) {
+          if (selectedSection) {
+            updateSectionLayout(selectedPage, selectedSection, newLayout.elements);
+          }
+          onClose(); // Close the dialog after selection
+        }
+      };
     
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
@@ -24,9 +34,12 @@ export default function SectionSelection({ isOpen, onClose }: SectionSelectionPr
           <DialogHeader>
             <DialogTitle>Select a new layout for {selectedSection}</DialogTitle>
           </DialogHeader>
-          <div className="w-full bg-muted/50 rounded-xl p-4">
+          <div className="w-full rounded-xl p-4">
           {placeholderSection.map((section) => (
-            <div key={section.name}>
+            <div 
+                key={section.name}
+                onClick={() => handleSelectLayout(section.name)}
+                className="cursor-pointer p-2 mb-2">
               <p className="font-bold text-sm mb-2 ms-4">{section.name}</p>
               <div className="border rounded-lg cursor-pointer hover:bg-muted mb-4">
                 <div>
