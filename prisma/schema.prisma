@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Website {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  domain    String?   @unique
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  pages     Page[]
+  
+  @@map("websites")
+}
+
+model Page {
+  id         String    @id @default(uuid())
+  name       String
+  slug       String    @unique
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  website    Website   @relation(fields: [websiteId], references: [id])
+  websiteId  String
+  sections   PageSection[]
+  
+  @@unique([websiteId, name])
+  @@unique([websiteId, slug])
+  @@map("pages")
+}
+
+model Section {
+  id         String    @id @default(uuid())
+  name       String
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  pages      PageSection[]
+  elements   SectionElement[]
+  
+  @@map("sections")
+}
+
+model PageSection {
+  page       Page      @relation(fields: [pageId], references: [id])
+  section    Section   @relation(fields: [sectionId], references: [id])
+  pageId     String
+  sectionId  String
+  position   Int
+
+  @@id([pageId, sectionId])
+  @@map("page_sections")
+}
+
+model Element {
+  id         String    @id @default(uuid())
+  tag        String
+  key        String?
+  className  String?   @map("class_name")
+  content    String?
+  src        String?
+  alt        String?
+  link       String?
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  sections   SectionElement[]
+  children   ElementChild[]  @relation("ElementToChild")
+  parents    ElementChild[]  @relation("ChildToElement")
+  
+  @@map("elements")
+}
+
+model SectionElement {
+  section    Section   @relation(fields: [sectionId], references: [id])
+  element    Element   @relation(fields: [elementId], references: [id])
+  sectionId  String
+  elementId  String
+  position   Int
+
+  @@id([sectionId, elementId])
+  @@map("section_elements")
+}
+
+model ElementChild {
+  parent     Element   @relation("ElementToChild", fields: [parentId], references: [id])
+  child      Element   @relation("ChildToElement", fields: [childId], references: [id])
+  parentId   String
+  childId    String
+  position   Int
+
+  @@id([parentId, childId])
+  @@map("element_children")
+}
