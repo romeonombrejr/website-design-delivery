@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Element, Page, WebsiteContextType } from "@/lib/definitions";
-// import { fetchPagesFromDB } from "@/lib/data";
+import { fetchPagesFromDB } from "@/lib/data";
 import { placeholderMenu, placeholderSection, placeholderSection2 } from "@/lib/placeholder-data";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
@@ -13,14 +13,23 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
   const [selectedPage, setSelectedPage] = useState<string>("Home");
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
-  const [pages, setPages] = useState<Page[]>([
-      {
-        name: "Home",
-        sections: [
-          placeholderSection[0]
-        ],
-      },
-    ]);
+  const [pages, setPages] = useState<Page[]>([]);
+
+  useEffect(() => {
+    async function loadPages() {
+      const dbPages = await fetchPagesFromDB();
+      if (dbPages.length > 0) {
+        setPages(dbPages);
+      } else {
+        // Fallback to placeholder data if no pages found
+        setPages([{
+          name: "Home",
+          sections: [placeholderSection[0]]
+        }]);
+      }
+    }
+    loadPages();
+  }, []);
 
   const addPage = (pageName: string) => {
     setPages((prevPages) => [
