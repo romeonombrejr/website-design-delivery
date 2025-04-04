@@ -1,23 +1,42 @@
 export interface Element {
+  id?: string;
   tag: "div" | "a" | "p" | "h1" | "h2" | "h3" | "img" | "button" | "video" | "span";
   key?: string
   className?: string;
-  content?: string; // For text content
-  src?: string; // For media elements like <img> or <video>
-  alt?: string; // Alt text for accessibility
-  link?: string; // Optional link for clickable elements
-  onClick?: () => void; // For interactive elements like buttons
-  children?: Element[]; // For nesting elements
+  content?: string; 
+  src?: string; 
+  alt?: string; 
+  link?: string; 
+  onClick?: () => void; 
+  children?: Element[]; 
 }
 
 export interface Section {
+  id?: string;
   name: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  pgeId?: string;
   elements: Element[];
 }
 
 export interface Page {
+  id?: string;
   name: string;
+  slug?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  websiteId?: string;
   sections: Section[];
+}
+
+export interface Website {
+  id?: string;
+  name: string;
+  domain?: string;
+  createdAt?: Date;
+  updatedAt?: Date; 
+  pages: Page[];
 }
 
 export interface WebsiteContextType {

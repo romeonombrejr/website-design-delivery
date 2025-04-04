@@ -1,4 +1,4 @@
-import { Section } from "@/lib/definitions";
+import { Section } from "../lib/definitions";
 
 export const placeholderMenu: Section[] = [
   {
