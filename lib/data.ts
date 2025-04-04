@@ -1,4 +1,5 @@
-// lib/data.ts
+'use server';
+
 import { PrismaClient } from '@prisma/client';
 import { Element, Section, Page } from '@/lib/definitions';
 

@@ -1,36 +1,70 @@
-import { NextResponse } from "next/server";
-import postgres from "postgres";
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
+// app/api/pages/route.ts
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma'; // Your Prisma client instance
+import { Element } from '@/lib/definitions'; 
 
 export async function GET() {
   try {
-    const pages = await sql`
-      SELECT * FROM pages;
-    `;
-    
-    const sections = await sql`
-      SELECT * FROM sections;
-    `;
+    const website = await prisma.website.findFirst({
+      where: { name: "My Website" },
+      include: {
+        pages: {
+          include: {
+            sections: {
+              include: {
+                elements: {
+                  include: { children: true }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
 
-    const elements = await sql`
-      SELECT * FROM elements;
-    `;
+    if (!website) {
+      return NextResponse.json([], { status: 200 });
+    }
 
-    // Structure the data: Attach sections and elements to their respective pages
-    const pagesWithSections = pages.map((page) => ({
-      ...page,
-      sections: sections
-        .filter((section) => section.page_id === page.id)
-        .map((section) => ({
-          ...section,
-          elements: elements.filter((element) => element.section_id === section.id),
-        })),
+    const transformedPages = website.pages.map(dbPage => ({
+      id: dbPage.id,
+      name: dbPage.name,
+      slug: dbPage.slug ?? undefined,
+      createdAt: dbPage.createdAt,
+      updatedAt: dbPage.updatedAt,
+      websiteId: dbPage.websiteId ?? undefined,
+      sections: dbPage.sections.map(dbSection => ({
+        id: dbSection.id,
+        name: dbSection.name,
+        createdAt: dbSection.createdAt,
+        updatedAt: dbSection.updatedAt,
+        pageId: dbSection.pageId ?? undefined,
+        elements: transformElements(dbSection.elements)
+      }))
     }));
 
-    return NextResponse.json(pagesWithSections);
+    console.log('Fetched pages:', transformedPages);
+    return NextResponse.json(transformedPages);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch pages" },
+      { status: 500 }
+    );
   }
+}
+
+function transformElements(elements: any[]): Element[] {
+  return elements.map(dbElement => ({
+    id: dbElement.id,
+    tag: dbElement.tag as Element['tag'], // Ensures correct tag type
+    key: dbElement.key || dbElement.id, // Fallback to id if key is missing
+    className: dbElement.className,
+    content: dbElement.content,
+    src: dbElement.src,
+    alt: dbElement.alt,
+    link: dbElement.link,
+    children: dbElement.children.length > 0 
+      ? transformElements(dbElement.children)
+      : undefined
+  }));
 }
