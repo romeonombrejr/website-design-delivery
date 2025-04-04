@@ -31,8 +31,8 @@ model Page {
   slug      String?    @unique
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
-  website   Website   @relation(fields: [websiteId], references: [id])
-  websiteId String
+  website   Website?   @relation(fields: [websiteId], references: [id])
+  websiteId String?
   sections  Section[]
 
   @@map("pages")
@@ -43,8 +43,8 @@ model Section {
   name      String
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
-  pages     Page      @relation(fields: [pageId], references: [id])
-  pageId    String
+  pages     Page?      @relation(fields: [pageId], references: [id])
+  pageId    String?
   elements  Element[]
 
   @@map("sections")
@@ -53,7 +53,7 @@ model Section {
 model Element {
   id        String    @id @default(uuid())
   tag       String
-  key       String?
+  key       String?   @default(uuid()) 
   className String?   @map("class_name")
   content   String?
   src       String?
