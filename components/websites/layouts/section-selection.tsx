@@ -30,7 +30,7 @@ export default function SectionSelection({ isOpen, onClose }: SectionSelectionPr
     
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-        <DialogContent className="min-w-5/6">
+        <DialogContent className="min-w-5/6 overflow-auto max-h-[95vh]">
           <DialogHeader>
             <DialogTitle>Select a new layout for {selectedSection}</DialogTitle>
           </DialogHeader>
