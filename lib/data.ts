@@ -1,6 +1,6 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from 'generated/prisma'; // Adjust the import based on your Prisma setup
 import { Element, Section, Page } from '@/lib/definitions';
 
 const prisma = new PrismaClient();
