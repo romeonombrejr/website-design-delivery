@@ -16,24 +16,24 @@ export interface Section {
   name: string;
   createdAt?: Date;
   updatedAt?: Date;
-  pageId?: string | undefined | null;
+  pgeId?: string;
   elements: Element[];
 }
 
 export interface Page {
   id?: string;
   name: string;
-  slug?: string | undefined | null;
+  slug?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  websiteId?: string | undefined | null;
+  websiteId?: string;
   sections: Section[];
 }
 
 export interface Website {
   id?: string;
   name: string;
-  domain?: string | undefined | null;
+  domain?: string;
   createdAt?: Date;
   updatedAt?: Date; 
   pages: Page[];
