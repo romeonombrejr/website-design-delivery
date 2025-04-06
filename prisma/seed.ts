@@ -1,5 +1,5 @@
 // prisma/seed.ts
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from 'generated/prisma';
 import { placeholderSection } from '@/lib/placeholder-data';
 
 const prisma = new PrismaClient();
