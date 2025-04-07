@@ -20,6 +20,7 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
       const dbPages = await fetchPagesFromDB();
       if (dbPages.length > 0) {
         setPages(dbPages);
+        console.log("Pages loaded from DB:", dbPages);
       } 
       // else {
       //   // Fallback to placeholder data if no pages found
