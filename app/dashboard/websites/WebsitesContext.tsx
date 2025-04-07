@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Element, Page, WebsiteContextType } from "@/lib/definitions";
 import { fetchPagesFromDB } from "@/lib/data";
-import { placeholderMenu, placeholderSection, placeholderSection2 } from "@/lib/placeholder-data";
+import { placeholderSection } from "@/lib/placeholder-data";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
   undefined
@@ -20,13 +20,14 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
       const dbPages = await fetchPagesFromDB();
       if (dbPages.length > 0) {
         setPages(dbPages);
-      } else {
-        // Fallback to placeholder data if no pages found
-        setPages([{
-          name: "Home",
-          sections: [placeholderSection[0]]
-        }]);
-      }
+      } 
+      // else {
+      //   // Fallback to placeholder data if no pages found
+      //   setPages([{
+      //     name: "Home",
+      //     sections: [placeholderSection[0]]
+      //   }]);
+      // }
     }
     loadPages();
   }, []);

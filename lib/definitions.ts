@@ -7,6 +7,7 @@ export interface Element {
   src?: string; 
   alt?: string; 
   link?: string; 
+  sectionId?: string;
   onClick?: () => void; 
   children?: Element[]; 
 }
@@ -16,7 +17,7 @@ export interface Section {
   name: string;
   createdAt?: Date;
   updatedAt?: Date;
-  pgeId?: string;
+  pageId?: string;
   elements: Element[];
 }
 

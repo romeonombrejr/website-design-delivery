@@ -15,7 +15,7 @@ export async function fetchPagesFromDB(): Promise<Page[]> {
             sections: {
               include: {
                 elements: {
-                  include: { children: true }
+                  include: { children: true, parent: true } // Include children and parent for recursive structure
                 }
               }
             }
@@ -54,18 +54,44 @@ export async function fetchPagesFromDB(): Promise<Page[]> {
 }
 
 // Helper function to recursively transform elements
-function transformElements(elements: any[]): Element[] {
-  return elements.map(dbElement => ({
+function transformElements(elements: any[] | undefined): Element[] {
+  if (!elements) return [];
+
+  const elementMap = new Map<string, any>();
+  const childrenMap = new Map<string, any[]>();
+
+  // Step 1: Organize elements into maps
+  for (const el of elements) {
+    elementMap.set(el.id, el);
+    if (el.parent?.length) {
+      for (const parent of el.parent) {
+        if (!childrenMap.has(parent.id)) {
+          childrenMap.set(parent.id, []);
+        }
+        childrenMap.get(parent.id)!.push(el);
+      }
+    }
+  }
+
+  // Step 2: Find root elements (those that have no parent)
+  const rootElements = elements.filter(el => !el.parent?.length);
+
+  // Step 3: Transform with recursion
+  const transform = (dbElement: any): Element => ({
     id: dbElement.id,
-    tag: dbElement.tag as Element['tag'], // Ensures correct tag type
-    key: dbElement.key || dbElement.id, // Fallback to id if key is missing
-    className: dbElement.className,
-    content: dbElement.content,
-    src: dbElement.src,
-    alt: dbElement.alt,
-    link: dbElement.link,
-    children: dbElement.children.length > 0 
-      ? transformElements(dbElement.children)
+    tag: dbElement.tag as Element['tag'],
+    key: dbElement.key || dbElement.id,
+    className: dbElement.className || null,
+    content: dbElement.content || null,
+    src: dbElement.src || null,
+    alt: dbElement.alt || null,
+    link: dbElement.link || null,
+    sectionId: dbElement.sectionId ?? undefined,
+    children: childrenMap.has(dbElement.id)
+      ? childrenMap.get(dbElement.id)!.map(transform)
       : undefined
-  }));
+  });
+
+  return rootElements.map(transform);
 }
+
