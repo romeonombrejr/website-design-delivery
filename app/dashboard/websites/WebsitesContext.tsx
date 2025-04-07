@@ -17,6 +17,7 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     async function loadPages() {
+      console.log("Loading pages from DB...");
       const dbPages = await fetchPagesFromDB();
       if (dbPages.length > 0) {
         setPages(dbPages);
