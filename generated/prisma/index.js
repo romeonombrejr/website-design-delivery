@@ -175,7 +175,9 @@ const config = {
         "native": true
       }
     ],
-    "previewFeatures": [],
+    "previewFeatures": [
+      "driverAdapters"
+    ],
     "sourceFilePath": "C:\\Users\\User\\docker-projects\\website-design-delivery\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
@@ -190,17 +192,16 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_URL",
+        "fromEnvVar": "POSTGRES_PRISMA_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Website {\n  id        String   @id @default(uuid())\n  name      String   @unique\n  domain    String?  @unique\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n  pages     Page[]\n\n  @@map(\"websites\")\n}\n\nmodel Page {\n  id        String    @id @default(uuid())\n  name      String\n  slug      String?   @unique\n  createdAt DateTime  @default(now()) @map(\"created_at\")\n  updatedAt DateTime  @updatedAt @map(\"updated_at\")\n  website   Website?  @relation(fields: [websiteId], references: [id])\n  websiteId String?\n  sections  Section[]\n\n  @@map(\"pages\")\n}\n\nmodel Section {\n  id        String    @id @default(uuid())\n  name      String\n  createdAt DateTime  @default(now()) @map(\"created_at\")\n  updatedAt DateTime  @updatedAt @map(\"updated_at\")\n  pages     Page?     @relation(fields: [pageId], references: [id])\n  pageId    String?\n  elements  Element[]\n\n  @@map(\"sections\")\n}\n\nmodel Element {\n  id        String    @id @default(uuid())\n  tag       String\n  key       String?   @default(uuid())\n  className String?   @map(\"class_name\")\n  content   String?\n  src       String?\n  alt       String?\n  link      String?\n  createdAt DateTime  @default(now()) @map(\"created_at\")\n  updatedAt DateTime  @updatedAt @map(\"updated_at\")\n  section   Section   @relation(fields: [sectionId], references: [id])\n  sectionId String\n  children  Element[] @relation(\"ElementRelation\")\n  parent    Element[] @relation(\"ElementRelation\")\n\n  @@map(\"elements\")\n}\n",
-  "inlineSchemaHash": "951dd48d1e569e2fef3ae24ece6ba3c7d1e629fc208e7a9cdb7289baf15b0590",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../generated/prisma\"\n  previewFeatures = [\"driverAdapters\"]\n}\n\ndatasource db {\n  provider  = \"postgresql\"\n  url       = env(\"POSTGRES_PRISMA_URL\")\n  directUrl = env(\"POSTGRES_URL_NON_POOLING\")\n}\n\nmodel Website {\n  id        String   @id @default(uuid())\n  name      String   @unique\n  domain    String?  @unique\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n  pages     Page[]\n\n  @@map(\"websites\")\n}\n\nmodel Page {\n  id        String    @id @default(uuid())\n  name      String\n  slug      String?   @unique\n  createdAt DateTime  @default(now()) @map(\"created_at\")\n  updatedAt DateTime  @updatedAt @map(\"updated_at\")\n  website   Website?  @relation(fields: [websiteId], references: [id])\n  websiteId String?\n  sections  Section[]\n\n  @@map(\"pages\")\n}\n\nmodel Section {\n  id        String    @id @default(uuid())\n  name      String\n  createdAt DateTime  @default(now()) @map(\"created_at\")\n  updatedAt DateTime  @updatedAt @map(\"updated_at\")\n  pages     Page?     @relation(fields: [pageId], references: [id])\n  pageId    String?\n  elements  Element[]\n\n  @@map(\"sections\")\n}\n\nmodel Element {\n  id        String    @id @default(uuid())\n  tag       String\n  key       String?   @default(uuid())\n  className String?   @map(\"class_name\")\n  content   String?\n  src       String?\n  alt       String?\n  link      String?\n  createdAt DateTime  @default(now()) @map(\"created_at\")\n  updatedAt DateTime  @updatedAt @map(\"updated_at\")\n  section   Section   @relation(fields: [sectionId], references: [id])\n  sectionId String\n  children  Element[] @relation(\"ElementRelation\")\n  parent    Element[] @relation(\"ElementRelation\")\n\n  @@map(\"elements\")\n}\n",
+  "inlineSchemaHash": "7dd003912faf89cfa6936e362a79a3738d9501cec15ed5fa79be76389c0a4ff1",
   "copyEngine": true
 }
 
