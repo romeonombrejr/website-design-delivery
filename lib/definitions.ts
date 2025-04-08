@@ -1,5 +1,4 @@
 export interface Element {
-  id?: string;
   tag: "div" | "a" | "p" | "h1" | "h2" | "h3" | "img" | "button" | "video" | "span";
   key?: string
   className?: string;
@@ -15,9 +14,9 @@ export interface Element {
 export interface Section {
   id?: string;
   name: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  pageId?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  page_id?: string;
   elements: Element[];
 }
 
@@ -25,9 +24,9 @@ export interface Page {
   id?: string;
   name: string;
   slug?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  websiteId?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  website_id?: string;
   sections: Section[];
 }
 
@@ -35,8 +34,8 @@ export interface Website {
   id?: string;
   name: string;
   domain?: string;
-  createdAt?: Date;
-  updatedAt?: Date; 
+  created_at?: Date;
+  updated_at?: Date; 
   pages: Page[];
 }
 

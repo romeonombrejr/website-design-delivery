@@ -2,8 +2,9 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { Element, Page, WebsiteContextType } from "@/lib/definitions";
-import { fetchPagesFromDB } from "@/lib/data";
+import { fetchWebsitefromDB } from "@/lib/data";
 import { placeholderSection } from "@/lib/placeholder-data";
+import { db } from "@vercel/postgres";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
   undefined
@@ -18,10 +19,10 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     async function loadPages() {
       console.log("Loading pages from DB...");
-      const dbPages = await fetchPagesFromDB();
-      if (dbPages.length > 0) {
-        setPages(dbPages);
-        console.log("Pages loaded from DB:", dbPages);
+      const dbWebsite = await fetchWebsitefromDB();
+      if (dbWebsite.length > 0) {
+        setPages(dbWebsite[0].pages);
+        console.log("Pages loaded from DB:", dbWebsite[0].pages);
       } 
       // else {
       //   // Fallback to placeholder data if no pages found

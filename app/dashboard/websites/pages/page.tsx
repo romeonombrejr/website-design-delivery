@@ -12,7 +12,6 @@ export default function Page() {
 
   const activePage = pages.find((page) => page.name === selectedPage);
 
-  // TODO: When button is clicked, this should also make the dialog box for /layouts page to appear upon redirecting.
   const handleSectionClick = (sectionName: string) => {
     setSelectedSection(sectionName); // Store in context
     router.push("/dashboard/websites/layouts"); // Navigate to layouts page
@@ -26,15 +25,16 @@ export default function Page() {
         <h4 className="mb-6 font-bold">Selected Page: {activePage?.name}</h4>
 
         {activePage?.sections.map((section) => (
-          <div
-            key={section.name}
-            onClick={() => handleSectionClick(section.name)}
-          >
+          <div key={section.name} onClick={() => handleSectionClick(section.name)}>
             <p className="font-bold text-sm mb-2 ms-4">{section.name}</p>
             <div className="border rounded-lg cursor-pointer hover:bg-muted mb-4">
-              {section.elements.map((element, index) => (
-                <RenderElement key={index} element={element} />
-              ))}
+              {Array.isArray(section.elements) ? (
+                section.elements.map((element, index) => (
+                  <RenderElement key={index} element={element} />
+                ))
+              ) : (
+                <p>No elements available for this section.</p>
+              )}
             </div>
           </div>
         ))}
