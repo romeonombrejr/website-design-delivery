@@ -43,6 +43,7 @@ export interface WebsiteContextType {
   pages: Page[];
   addPage: (pageName: string) => void;
   addSection: (pageName: string, sectionName: string, elements?: Element[]) => void;
+  deleteSection: (pageName: string, sectionName: string) => void;
   selectedPage: string;
   setSelectedPage: (page: string) => void;
   selectedSection: string | null;

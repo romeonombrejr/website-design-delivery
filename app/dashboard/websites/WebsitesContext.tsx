@@ -4,7 +4,6 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 import { Element, Page, WebsiteContextType } from "@/lib/definitions";
 import { fetchWebsitefromDB } from "@/lib/data";
 import { placeholderSection } from "@/lib/placeholder-data";
-import { db } from "@vercel/postgres";
 
 const WebsitesContext = createContext<WebsiteContextType | undefined>(
   undefined
@@ -66,6 +65,20 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const deleteSection = (pageName: string, sectionName: string) => {
+    setPages((prevPages) =>
+      prevPages.map((page) =>
+        page.name === pageName
+          ? {
+              ...page,
+              sections: page.sections.filter((section) => section.name !== sectionName),
+            }
+          : page
+      )
+    );
+  };
+  
+
   const updateSectionLayout = (pageName: string, sectionName: string, newElements: Element[]) => {
     setPages((prevPages) =>
       prevPages.map((page) =>
@@ -86,7 +99,8 @@ export function WebsitesProvider({ children }: { children: ReactNode }) {
     <WebsitesContext.Provider value={{ 
       pages, 
       addPage, 
-      addSection, 
+      addSection,
+      deleteSection, 
       selectedPage, 
       setSelectedPage, 
       selectedSection, 
